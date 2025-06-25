@@ -91,22 +91,25 @@ For clients that support a configuration file (e.g., a `.mcp.json` file), you ca
 
 ### Connecting to a Remote Server (Azure)
 
-Once deployed to Azure, the server requires authentication using a system key.
+Once deployed to Azure, the server requires authentication using a system key. You can get this key from the Terraform output or from the Azure Portal (`Function App -> App Keys -> System Keys -> mcp_extension`).
 
-1.  **Get the Function App URL:** The URL will be in the format `https://<your-function-app-name>.azurewebsites.net/runtime/webhooks/mcp/sse`.
+For clients that support a configuration file (e.g., a `.mcp.json` file), you can define the remote server connection like this. Replace the URL with your function app's hostname and the key with your `mcp_extension` system key.
 
-2.  **Get the System Key:** You need to obtain the `mcp_extension` system key for your Function App. You can find this in the Azure Portal (under `App Keys` in your Function App) or by using the Azure CLI:
+```json
+{
+    "servers": {
+        "Devin-MCP-Azure-Functions": {
+            "type": "sse",
+            "url": "https://<your-function-app-name>.azurewebsites.net/runtime/webhooks/mcp/sse",
+            "headers": {
+                "x-functions-key": "YOUR_MCP_EXTENSION_SYSTEM_KEY"
+            }
+        }
+    }
+}
+```
 
-    ```bash
-    az functionapp keys list --resource-group <resource-group-name> --name <your-function-app-name> --query "systemKeys.mcp_extension" -o tsv
-    ```
-
-3.  **Configure the Client:**
-
-    *   **URL:** `https://<your-function-app-name>.azurewebsites.net/runtime/webhooks/mcp/sse`
-    *   **Header:** Add a header with the key `x-functions-key` and the value of your `mcp_extension` system key.
-
-    If your client supports it, you can also include the key as a query parameter: `?code=<your-mcp_extension-key>`
+> **Note on Authentication:** This sample uses Azure Functions' built-in API key (system key) authentication for simplicity and ease of deployment. The formal MCP specification mentions compliance with the [OAuth 2.0 Dynamic Client Registration Protocol](https://www.rfc-editor.org/rfc/rfc7591) for more robust security. A production-grade implementation might require a more complex setup involving an identity provider to fully adhere to this standard.
 
 ## Deployment
 
