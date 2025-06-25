@@ -49,7 +49,6 @@ resource "azurerm_linux_function_app" "func" {
     "AzureWebJobsStorage"      = azurerm_storage_account.sa.primary_connection_string
     "FUNCTIONS_EXTENSION_VERSION" = "~4"
     "FUNCTIONS_WORKER_RUNTIME" = "node"
-    "WEBSITE_RUN_FROM_PACKAGE" = "1"
     "DEVIN_API_KEY"            = var.devin_api_key
     "AzureWebJobsSecretStorageType" = "Files"
   }
