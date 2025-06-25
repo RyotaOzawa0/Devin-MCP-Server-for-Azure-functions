@@ -12,11 +12,21 @@ This directory contains the Terraform configuration to deploy the Devin MCP serv
 
 1.  **Authenticate with Azure:**
 
-    Log in to your Azure account:
+    Log in to your Azure account. Then, configure the necessary environment variables for Terraform to authenticate. Terraform will use these variables automatically.
 
     ```bash
+    # Log in to Azure interactively
     az login
+
+    # Get the current account details
+    ACCOUNT_INFO=$(az account show)
+
+    # Export the required environment variables
+    export ARM_SUBSCRIPTION_ID=$(echo $ACCOUNT_INFO | jq -r .id)
+    export ARM_TENANT_ID=$(echo $ACCOUNT_INFO | jq -r .tenantId)
     ```
+
+    *Note: This command requires `jq` to be installed. If you don't have it, you can install it or manually copy the values from the `az account show` output.*
 
 2.  **Initialize Terraform:**
 
