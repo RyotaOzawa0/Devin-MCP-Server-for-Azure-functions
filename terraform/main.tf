@@ -45,17 +45,18 @@ resource "azurerm_linux_function_app" "func" {
   storage_account_access_key = azurerm_storage_account.sa.primary_access_key
   service_plan_id            = azurerm_service_plan.plan.id
 
+  app_settings = {
+    "AzureWebJobsStorage"      = azurerm_storage_account.sa.primary_connection_string
+    "FUNCTIONS_EXTENSION_VERSION" = "~4"
+    "FUNCTIONS_WORKER_RUNTIME" = "node"
+    "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    "DEVIN_API_KEY"            = var.devin_api_key
+    "AzureWebJobsSecretStorageType" = "Files"
+  }
+
   site_config {
     application_stack {
       node_version = 20
-    }
-    app_settings = {
-      "AzureWebJobsStorage"      = azurerm_storage_account.sa.primary_connection_string
-      "FUNCTIONS_EXTENSION_VERSION" = "~4"
-      "FUNCTIONS_WORKER_RUNTIME" = "node"
-      "WEBSITE_RUN_FROM_PACKAGE" = "1"
-      "DEVIN_API_KEY"            = var.devin_api_key
-      "AzureWebJobsSecretStorageType" = "Files"
     }
   }
 
