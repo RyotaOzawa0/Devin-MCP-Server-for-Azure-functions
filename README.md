@@ -112,6 +112,12 @@ Once deployed to Azure, the server requires authentication using a system key.
 
 This Function App is ready to be deployed to Azure. You can use the [Azure Developer CLI (`azd`)](https://aka.ms/azd) or standard Azure Functions deployment methods.
 
+### Deploying with Terraform
+
+For automated infrastructure as code deployment, you can use the provided Terraform configuration.
+
+Detailed instructions can be found in the [Terraform README](./terraform/README.md).
+
 ## References
 
 *   **Azure Functions Remote MCP Server Sample:** [Azure-Samples/remote-mcp-functions-typescript](https://github.com/Azure-Samples/remote-mcp-functions-typescript/tree/main)
