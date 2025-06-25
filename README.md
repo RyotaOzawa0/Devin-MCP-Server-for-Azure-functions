@@ -1,5 +1,5 @@
 
-# Devin MCP Server
+# Devin MCP Server for Azure Functions
 
 This project provides a remote MCP (Model Context Protocol) server for interacting with the Devin API. It is built with TypeScript and designed to be deployed as an Azure Function App.
 
@@ -20,7 +20,7 @@ The following tools are implemented:
 
 *   [Node.js](https://nodejs.org/) (v18.x or later recommended)
 *   [Azure Functions Core Tools](https://github.com/Azure/azure-functions-core-tools)
-*   A Devin API Key. You can get one from your Devin settings page.
+*   [Devin API Key](https://app.devin.ai/settings/api-keys)
 
 ## Getting Started
 
@@ -72,11 +72,22 @@ You can connect to this MCP server from any compatible client, such as the [MCP 
 
 When running the server locally, use the following SSE endpoint URL:
 
-```
-http://localhost:7071/runtime/webhooks/mcp/sse
-```
+`http://localhost:7071/runtime/webhooks/mcp/sse`
 
 No authentication is required for local connections.
+
+For clients that support a configuration file (e.g., a `.mcp.json` file), you can define the server connection like this:
+
+```json
+{
+    "servers": {
+        "DevinMCP": {
+            "type": "sse",
+            "url": "http://localhost:7071/runtime/webhooks/mcp/sse"
+        }
+    }
+}
+```
 
 ### Connecting to a Remote Server (Azure)
 
@@ -100,3 +111,9 @@ Once deployed to Azure, the server requires authentication using a system key.
 ## Deployment
 
 This Function App is ready to be deployed to Azure. You can use the [Azure Developer CLI (`azd`)](https://aka.ms/azd) or standard Azure Functions deployment methods.
+
+## References
+
+*   **Azure Functions Remote MCP Server Sample:** [Azure-Samples/remote-mcp-functions-typescript](https://github.com/Azure-Samples/remote-mcp-functions-typescript/tree/main)
+*   **Azure Functions MCP Trigger Bindings:** [Azure Functions MCP Trigger Documentation](https://docs.azure.cn/en-us/azure-functions/functions-bindings-mcp-trigger?tabs=attribute&pivots=programming-language-typescript)
+*   **Devin API Reference:** [Devin API Documentation](https://docs.devin.ai/api-reference/overview)
