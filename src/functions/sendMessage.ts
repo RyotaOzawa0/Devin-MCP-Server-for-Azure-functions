@@ -2,8 +2,9 @@
 import { app, InvocationContext } from "@azure/functions";
 import { z } from 'zod';
 import { devinApi } from '../lib/devin';
+import { Session, ErrorResponse } from "../lib/types";
 
-export async function sendMessageHandler(_message: unknown, context: InvocationContext): Promise<any> {
+export async function sendMessageHandler(_message: unknown, context: InvocationContext): Promise<Session | ErrorResponse> {
     context.log('Sending a message to a Devin session...');
 
     const toolArgs = context.triggerMetadata.mcptoolargs as { sessionId?: string, message?: string };
@@ -22,8 +23,8 @@ export async function sendMessageHandler(_message: unknown, context: InvocationC
     const { sessionId, message } = validationResult.data;
 
     try {
-        const response = await devinApi.post(`/sessions/${sessionId}/message`, { message });
-        return response.data;
+        const session = await devinApi.post<Session>(`/sessions/${sessionId}/message`, { message });
+        return session;
     } catch (error: any) {
         context.error('Error sending message:', error);
         return { error: "Failed to send message", details: error.message };

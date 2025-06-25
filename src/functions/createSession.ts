@@ -2,9 +2,10 @@
 import { app, InvocationContext } from "@azure/functions";
 import { z } from 'zod';
 import { devinApi } from '../lib/devin';
+import { Session, ErrorResponse } from "../lib/types";
 
 // Define the handler function
-export async function createSessionHandler(_message: unknown, context: InvocationContext): Promise<any> {
+export async function createSessionHandler(_message: unknown, context: InvocationContext): Promise<Session | ErrorResponse> {
     context.log('Creating a new Devin session...');
 
     const toolArgs = context.triggerMetadata.mcptoolargs as { task?: string };
@@ -20,8 +21,8 @@ export async function createSessionHandler(_message: unknown, context: Invocatio
     const { task } = validationResult.data;
 
     try {
-        const response = await devinApi.post('/sessions', { task });
-        return response.data;
+        const session = await devinApi.post<Session>('/sessions', { task });
+        return session;
     } catch (error: any) {
         context.error('Error creating session:', error);
         return { error: "Failed to create session", details: error.message };

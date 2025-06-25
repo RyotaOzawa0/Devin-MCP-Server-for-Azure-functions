@@ -1,8 +1,9 @@
 import { app, InvocationContext } from "@azure/functions";
 import { z } from 'zod';
 import { devinApi } from '../lib/devin';
+import { Session, ErrorResponse } from "../lib/types";
 
-export async function updateTagsHandler(_message: unknown, context: InvocationContext): Promise<any> {
+export async function updateTagsHandler(_message: unknown, context: InvocationContext): Promise<Session | ErrorResponse> {
     context.log('Updating tags for a Devin session...');
 
     const toolArgs = context.triggerMetadata.mcptoolargs as { sessionId?: string, tags?: string[] };
@@ -21,8 +22,8 @@ export async function updateTagsHandler(_message: unknown, context: InvocationCo
     const { sessionId, tags } = validationResult.data;
 
     try {
-        const response = await devinApi.put(`/sessions/${sessionId}/tags`, { tags });
-        return response.data;
+        const session = await devinApi.put<Session>(`/sessions/${sessionId}/tags`, { tags });
+        return session;
     } catch (error: any) {
         context.error('Error updating tags:', error);
         return { error: "Failed to update tags", details: error.message };

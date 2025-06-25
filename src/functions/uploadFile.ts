@@ -2,9 +2,9 @@
 import { app, InvocationContext } from "@azure/functions";
 import { z } from 'zod';
 import { devinApi } from '../lib/devin';
-import FormData from 'form-data';
+import { UploadFileResponse, ErrorResponse } from "../lib/types";
 
-export async function uploadFileHandler(_message: unknown, context: InvocationContext): Promise<any> {
+export async function uploadFileHandler(_message: unknown, context: InvocationContext): Promise<UploadFileResponse | ErrorResponse> {
     context.log('Uploading a file to a Devin session...');
 
     const toolArgs = context.triggerMetadata.mcptoolargs as { sessionId?: string, path?: string, content?: string };
@@ -25,17 +25,11 @@ export async function uploadFileHandler(_message: unknown, context: InvocationCo
 
     try {
         const form = new FormData();
-        form.append('file', Buffer.from(content), {
-            filename: path,
-        });
+        form.append('file', new Blob([Buffer.from(content)]), path);
 
-        const response = await devinApi.post(`/sessions/upload?sessionId=${sessionId}`, form, {
-            headers: {
-                ...form.getHeaders(),
-            },
-        });
+        const result = await devinApi.post<UploadFileResponse>(`/sessions/upload?sessionId=${sessionId}`, form);
 
-        return response.data;
+        return result;
     } catch (error: any) {
         context.error('Error uploading file:', error);
         return { error: "Failed to upload file", details: error.message };

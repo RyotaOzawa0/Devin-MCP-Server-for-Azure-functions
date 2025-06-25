@@ -1,8 +1,9 @@
 import { app, InvocationContext } from "@azure/functions";
 import { z } from 'zod';
 import { devinApi } from '../lib/devin';
+import { Session, ErrorResponse } from "../lib/types";
 
-export async function getSessionHandler(_message: unknown, context: InvocationContext): Promise<any> {
+export async function getSessionHandler(_message: unknown, context: InvocationContext): Promise<Session | ErrorResponse> {
     context.log('Getting a specific Devin session...');
 
     const toolArgs = context.triggerMetadata.mcptoolargs as { sessionId?: string };
@@ -18,8 +19,8 @@ export async function getSessionHandler(_message: unknown, context: InvocationCo
     const { sessionId } = validationResult.data;
 
     try {
-        const response = await devinApi.get(`/sessions/${sessionId}`);
-        return response.data;
+        const session = await devinApi.get<Session>(`/session/${sessionId}`);
+        return session;
     } catch (error: any) {
         context.error('Error getting session:', error);
         return { error: "Failed to get session", details: error.message };

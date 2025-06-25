@@ -12,8 +12,6 @@
   },
   "dependencies": {
     "@azure/functions": "4.7.3-beta.0",
-    "axios": "^1.7.2",
-    "form-data": "^4.0.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
