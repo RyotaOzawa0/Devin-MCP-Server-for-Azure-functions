@@ -1,7 +1,7 @@
 {
   "name": "devin-mcp",
   "version": "1.0.0",
-  "description": "",
+  "description": "Devin MCP Server",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
