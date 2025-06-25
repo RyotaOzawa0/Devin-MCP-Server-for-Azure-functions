@@ -40,7 +40,7 @@ app.mcpTool('updateTags', {
         },
         {
             propertyName: 'tags',
-            propertyType: 'string[]',
+            propertyType: 'array',
             description: 'The new array of tags.',
         }
     ],
