@@ -1,6 +1,19 @@
+# Dependencies
 /node_modules
+
+# Build output
 /dist
-/.cache
-/.next
-/.nuxt
-/.vscode
+
+# Local settings (often contains secrets)
+local.settings.json
+
+# IDE and editor directories
+.vscode/
+.idea/
+
+# Log files
+*.log
+npm-debug.log*
+
+# Azure Functions local cache
+.azurefunctions
