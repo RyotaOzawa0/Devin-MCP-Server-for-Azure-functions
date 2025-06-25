@@ -1,4 +1,4 @@
-const baseURL = 'https://api.devin.ai';
+const baseURL = 'https://api.devin.ai/v1';
 const apiKey = process.env.DEVIN_API_KEY;
 
 if (!apiKey) {
