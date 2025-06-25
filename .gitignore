@@ -17,3 +17,9 @@ npm-debug.log*
 
 # Azure Functions local cache
 .azurefunctions
+
+# Terraform state files
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
