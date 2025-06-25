@@ -1,9 +1,0 @@
-{
-  "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "",
-    "FUNCTIONS_WORKER_RUNTIME": "node",
-    "DEVIN_API_KEY": "YOUR_DEVIN_API_KEY_HERE",
-    "AzureWebJobsSecretStorageType": "Files"
-  }
-}
