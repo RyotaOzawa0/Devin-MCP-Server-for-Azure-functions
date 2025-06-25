@@ -1,6 +1,22 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/azure/functions-action
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
+# ===================================================================================================
+# NOTE FOR FORKERS / USERS OF THIS SAMPLE
+#
+# This workflow is configured for the original repository's Azure Function App.
+# If you have forked this repository and want to use this CI/CD pipeline,
+# you will need to make the following changes:
+#
+# 1. In the 'deploy' job below, change the `app-name` to your own Function App's name.
+# 2. Create a new repository secret in your fork's settings (Settings > Secrets and variables > Actions).
+#    Name it something like `AZURE_FUNCTIONAPP_PUBLISH_PROFILE`.
+#    The value should be the content of the publish profile you download from the Azure portal.
+# 3. Update the `publish-profile` line in the 'deploy' job to use your new secret name,
+#    e.g., `publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}`
+#
+# ===================================================================================================
+
 name: Build and deploy Node.js project to Azure Function App - func-devin-mcp-server
 
 on:
