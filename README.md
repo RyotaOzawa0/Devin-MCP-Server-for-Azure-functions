@@ -47,9 +47,10 @@ Open `local.settings.json` and replace `YOUR_DEVIN_API_KEY_HERE` with your actua
 {
   "IsEncrypted": false,
   "Values": {
-    "AzureWebJobsStorage": "",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "node",
-    "DEVIN_API_KEY": "YOUR_DEVIN_API_KEY_HERE"
+    "DEVIN_API_KEY": "YOUR_DEVIN_API_KEY_HERE",
+    "AzureWebJobsSecretStorageType": "Files"
   }
 }
 ```
